@@ -1,0 +1,115 @@
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 12px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+    margin-top: 4%;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+.active{
+	background-color: #4CAF50;
+}
+
+.menu{
+	position: fixed;
+	top:0px;	
+	width: 100%;
+
+}
+.menu ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.menu li{
+	float: left;
+}
+
+.menu li a{
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+body{
+	margin-top: 4%;
+	margin-left: 0;
+}
+
+.login form li {
+	display: block;
+	padding: 14px 16px;
+	width: 50%;
+	text-align: left;
+	margin-left: 30%;
+	margin-right: 30%; 
+}
+
+.login form {
+	border: solid;
+}
+
+input {
+	 max-width: 50%;
+}
+
+.table_product{
+	border: solid 1pt black;
+	border-collapse: collapse;
+}
+
+.nama_product{
+	border: solid 1pt black; 
+}
+tr{
+	border: solid 1pt black;
+}
+
+
+.gambar_product{
+	background-color: grey;
+}
