@@ -17,4 +17,21 @@
 		var $sukses;
 		var $isi;
 	}
+
+	class Objectkategori{
+		var $id;
+		var $nama;
+		var $tanggal_tambah;
+		var $index;
+	}
+
+	class ObjectBarang{
+		var $id;
+		var $nama;
+		var $harga;
+		var $kategori;
+		var $jumlah;
+		var $gambar;
+		var $tanggal_tambah;
+	}
 ?>
