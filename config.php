@@ -122,16 +122,16 @@
 		return $message;
 	}
 
-	function getAllKategoriHTML()
+	function getAllKategoriHTML($id="kategori_list")
 	{
 		$message = getAllKategori();
 		
 		if($message->sukses==1)
 		{
-			echo "<ul>";
+			echo '<ul id="'.$id.'">';
 			foreach($message->isi as $data)
 			{
-				echo "<li>$data->nama</li>";
+				echo "<li><a href='index.php?category=$data->id'>$data->nama</a></li>";
 			}
 			echo "</ul>";
 		}
@@ -168,7 +168,7 @@
 	{
 		global $conn;
 		
-		$sql = "INSERT INTO `webprog_barang` (`barang_id`, `barang_nama`, `barang_harga`, `barang_kategori`, `barang_jumlah`, `barang_gambar`, `barang_tanggal_tambah`) VALUES ('', '$barang->nama', '$barang->harga', '$barang->kategori', '$barang->jumlah', '$barang->gambar', NOW());";
+		$sql = "INSERT INTO `webprog_barang` (`barang_id`, `barang_nama`, `barang_harga`, `barang_kategori`, `barang_jumlah`, `barang_gambar`, `barang_tanggal_tambah`, `barang_keterangan`) VALUES ('', '$barang->nama', '$barang->harga', '$barang->kategori', '$barang->jumlah', '$barang->gambar', NOW(), '$barang->keterangan');";
 		$result = $conn->query($sql);
 		
 		$message = new ObjectMessage();
@@ -223,6 +223,58 @@
 					."<img src='$data->gambar' width='200px' height='200px'/>"
 					."</li>";
 			}
+		}
+		
+	}
+
+	function getAllBarangHTMLDIV($sql)
+	{
+		$message = getAllBarang($sql);
+		
+		if($message->sukses==1)
+		{
+			if(count($message->isi) < 1)
+			{
+				echo "<h3 class='nomargin'>Barang tidak ada</h3>";
+				return;
+			}
+			foreach($message->isi as $data)
+			{
+				?>
+					<div class="barang-item">
+						<a href="product_page.php?id=<?php echo $data->id; ?>">
+							<img src="<?php echo $data->gambar; ?>" class="barang-item-gambar">
+						</a>
+						<div class="barang-item-info">
+							<span class="barang-item-info-nama">
+								<a href="product_page.php?id=<?php echo $data->id; ?>" title="<?php echo $data->nama;?>">
+									<?php 
+										if(strlen($data->nama)>15){
+											echo substr($data->nama, 0, 12)."...";
+										}else{
+											echo $data->nama; 
+										}
+									?>
+								</a>
+							</span>
+							<span class="barang-item-info-harga">IDR <?php echo $data->harga; ?></span>
+							<div class="barang-item-info-whist">
+								<?php
+									if(isset($_SESSION['login']))
+									{
+										echo '<img class="barang-item-whislist" src="images/like.png" >';
+									}
+								?>
+								<img class="barang-item-cart" src="images/cart.png" >
+							</div>
+						</div>
+					</div>
+				<?php
+			}
+		}
+		else
+		{
+			echo "<h3 class='nomargin'>Barang tidak ada</h3>";
 		}
 		
 	}

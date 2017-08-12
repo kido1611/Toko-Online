@@ -19,7 +19,6 @@
 			
 			$message = registerUser($user);
 			
-			header('Location: index.php');
 		}
 		else if($action=="login")
 		{
@@ -54,6 +53,7 @@
 			$barang->harga = $_POST['harga_barang'];
 			$barang->kategori = $_POST['kategori_barang'];
 			$barang->jumlah = $_POST['jumlah_barang'];
+			$barang->keterangan = $_POST['keterangan_barang'];
 			
 			$target_dir = "barang/";
 			$target_file = $target_dir . $barang->nama."_".basename($_FILES["gambar_barang"]["name"]);
@@ -64,17 +64,15 @@
 			
 			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
 				echo "Hanya file jpeg, jpg, dan png yang diperbolehkan";
-				header('Location: admin_page.php');
 			}
 			else
 			{
 				if (move_uploaded_file($_FILES["gambar_barang"]["tmp_name"], $target_file)) {
 					$message = addBarang($barang);
 					echo $message->message;
-					header('Location: index.php');
+					//header('Location: index.php');
 				} else {
 					echo "Eror saat mengupload gambar";
-					header('Location: admin_page.php');
 				}
 			}
 		}

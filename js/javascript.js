@@ -12,6 +12,7 @@ function closeNav() {
 
 function sendmessage()
 {
+	
     var myWindow = window.open("", "MsgWindow", "width=1000,height=600");
     myWindow.document.write
 		("<h1>Ketentuan Umum :</h1>"+

@@ -33,5 +33,6 @@
 		var $jumlah;
 		var $gambar;
 		var $tanggal_tambah;
+		var $keterangan;
 	}
 ?>
