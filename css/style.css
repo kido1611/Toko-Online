@@ -447,6 +447,8 @@ div.admin-page
 	padding: 10px;
 }
 
+
+
 div.admin-page table{
 	border-collapse: collapse;
 	width: 100%;
@@ -513,12 +515,23 @@ select#barang-sort-list
 	box-shadow: 1px 1px 1px #4F4E4E;
 	color: #fff;
 	display: inline-block;
+	height: 20px;
+	width: 50px;
 	padding: 8px;
 	margin: 10px 0px;
 	text-decoration: none;
 }
 
+
+
+
 .button:hover
 {
 	background-color: #075A7E;
+}
+
+/* tambahan ricat*/
+
+#form-add-cart{
+	text-align: center;
 }

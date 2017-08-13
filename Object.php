@@ -42,6 +42,7 @@
 		var $jasa_kirim;
 		var $tanggal_tambah;
 		var $transaksi;
+		var $item;
 	}
 
 	class ObjectCartItem{

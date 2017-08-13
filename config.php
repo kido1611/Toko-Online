@@ -455,7 +455,7 @@
 		$message = new ObjectMessage();
 		$message->sukses = 0;
 		
-		$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id";
+		$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = 0";
 		$result = $conn->query($sql);
 		
 		if($result->num_rows < 0)
@@ -463,7 +463,7 @@
 			$sql2 = "INSERT INTO `webprog_cart` (`cart_id`, `user_id`, `cart_jasa_kirim`, `cart_tanggal_tambah`, `cart_transaksi`) VALUES (NULL, '$id', '0', NOW(), '0');";
 			$result2 = $conn->query($sql);
 			
-			$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id";
+			$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = 0";
 			$result = $conn->query($sql);
 		}
 		
@@ -495,6 +495,71 @@
 		$message = new ObjectMessage();
 		$message->sukses = 1;
 		$message->message = "Berhasil ditambahkan";
+		
+		return $message;
+	}
+
+	function getAllCartItemByCart($cart)
+	{
+		global $conn;
+		
+		$sql = "SELECT * FROM `webprog_cart_item` WHERE cart_id=$cart";
+		
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 0;
+		
+		$num_result = $result->num_rows;
+		if($num_result>0)
+		{
+			$message->sukses = 1;
+			$data = array();
+			while($rows = $result->fetch_assoc())
+			{
+				$cart_item = new ObjectCartItem();
+				$cart_item->id = $rows['cart_item_id'];
+				$cart_item->cart_id = $rows['cart_id'];
+				$cart_item->barang_id = $rows['barang_id'];
+				$cart_item->jumlah = $rows['cart_item_jumlah'];
+				$cart_item->keterangan= $rows['cart_item_keterangan'];
+				$cart_item->tanggal_tambah = $rows['cart_item_tanggal_tambah'];
+				
+				$data[] = $cart_item;
+			}
+			$message->isi = $data;
+		}
+		
+		return $message;
+	}
+
+	function getAllCartItemByUserID($id)
+	{
+		global $conn;
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		
+		$cart = getCartByUserID($id)->isi;
+		
+		$cart_item = getAllCartItemByCart($cart->id);
+		$cart->item = $cart_item->isi;
+		
+		$message->isi = $cart;
+		
+		return $message;
+	}
+
+	function hapusCartItem($id)
+	{
+		global $conn;
+		
+		$sql = "DELETE FROM `webprog_cart_item` WHERE `webprog_cart_item`.`cart_item_id` = $id";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil dihapus";
 		
 		return $message;
 	}

@@ -56,7 +56,7 @@
 							<li>Nomor Telepon:<input class="regis_form" type="text" id="telepon" name="telepon" required></span></li>
 							<li>Alamat:<input class="regis_form" type="text" id="alamat" name="alamat" required></span></li>
 							<li><input type="checkbox" id="newsletter" name="newsletter" value="newsletter">Newsletter
-							<span style="padding-left: 6em"></span><input type="checkbox" id="EULA_term" name="EULA_term" value="EULA_term" required><span style="text-decoration: underline;" onclick="sendmessage()"> EULA terms</span></li>
+							<span style="padding-left: 6em"></span><input type="checkbox" id="EULA_term" name="EULA_term" value="EULA_term" required><span style="text-decoration: underline; cursor:pointer;" onclick="sendmessage()"> EULA terms</span></li>
 							<li>
 								<input type="hidden" value="register" name="action">
 								<input style="margin-left: 30%;" class="btn" type="submit" value="Daftar">
@@ -67,6 +67,7 @@
 			?>
 		</form>
 	</div>
+	<script src="js/javascript.js"></script>
 <?php
 	include 'footer.php';
 ?>
