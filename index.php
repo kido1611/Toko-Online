@@ -6,7 +6,7 @@
 	<div id="home-wrapper">
 		<div id="sidebar">
 			<h2>
-				Kategori
+				Kategori hai
 			</h2>
 			<hr/>
 			<?php
