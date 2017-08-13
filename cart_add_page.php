@@ -23,19 +23,24 @@
 			<p>
 				Anda akan membeli :
 			</p>
+			<br>
 			<h3 class="nomargin"><?php echo $barang->isi->nama; ?></h3>
+			<br>
 			<h5 class="nomargin">IDR. <?php echo $barang->isi->harga; ?></h5>
 			<h5 class="nomargin"><?php echo $kategori->isi->nama; ?></h5>
+			<br>
+			<br>
 			<div>
 				Jumlah barang : 
 				<input type="number" name="jumlah_barang" id="jumlah_barang" min="0" max="5" required/>
 			</div>
 			<div>
 				Keterangan :<br/>
-				<textarea maxlength="160" name="keterangan_barang">
+				<textarea maxlength="160" cols="50" rows="5" name="keterangan_barang">
 					
 				</textarea>
 			</div>
+			<br>
 			<div>
 				<input type="hidden" name="action" value="cart-add"/>
 				<input type="hidden" name="id_barang" value="<?php echo $barang->isi->id; ?>" />

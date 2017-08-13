@@ -3,10 +3,22 @@
 	include('header.php');
 ?>
 <section>
+	<div id="banner" style="text-align: center;">
+		<img style="width: 90%;" src="./images/bannerbiru-tokoonline.png"/>
+		<br>
+	</div>
+	<br>
+	<div style="background-color: white; width: 80%; margin: auto;text-align: center;">
+		"Toko Online adalah versi online dari Toko Online dari toko yang berada di Jalan Diponegori No. 128CE, Salatiga"
+		<br>
+		Happy Shopping ^^
+	</div>
+	<br>
+	<br>
 	<div id="home-wrapper">
 		<div id="sidebar">
 			<h2>
-				Kategori hai
+				Kategori
 			</h2>
 			<hr/>
 			<?php
