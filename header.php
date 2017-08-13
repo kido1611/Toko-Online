@@ -20,7 +20,7 @@
 	<script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
 </head>
 
-<body background="green-16.jpg" style="background-repeat: repeat;" >
+<body style="background-color: #E3FFE0 " >
 	<header>
 		<nav class="menu">
 			<ul>

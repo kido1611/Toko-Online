@@ -442,10 +442,10 @@ div#barang-container div.barang-item div.barang-item-info div.barang-item-info-w
 
 div.admin-page
 {
-	background: rgba(255, 255, 255, 0.8);
+	background-color: #E2E4F4;
 	margin: auto;
 	max-width: 1000px;
-	padding: 10px;
+	padding: 30px;
 }
 
 
@@ -522,6 +522,12 @@ select#barang-sort-list
 	text-decoration: none;
 }
 
+.button_size{
+	height: 10px;
+	width: 30px;
+	padding: 5px;
+}
+
 .button:hover
 {
 	background-color: #075A7E;
@@ -531,4 +537,19 @@ select#barang-sort-list
 
 #form-add-cart{
 	text-align: center;
+}
+
+.hylink{
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.hylink:hover{
+	color: #182881;
+}
+
+.hylink_nama{
+	text-decoration: none;
+	font-weight: 200;
+	color: black;
 }
