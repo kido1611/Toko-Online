@@ -35,4 +35,21 @@
 		var $tanggal_tambah;
 		var $keterangan;
 	}
+
+	class ObjectCart{
+		var $id;
+		var $user_id;
+		var $jasa_kirim;
+		var $tanggal_tambah;
+		var $transaksi;
+	}
+
+	class ObjectCartItem{
+		var $id;
+		var $cart_id;
+		var $barang_id;
+		var $jumlah;
+		var $keterangan;
+		var $tanggal_tambah;
+	}
 ?>

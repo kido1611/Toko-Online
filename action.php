@@ -133,6 +133,24 @@
 			
 			header('Location: admin_page.php?barang');
 		}
+		else if($action=="cart-add")
+		{
+			$id = $_POST['id_barang'];
+			$jumlah = $_POST['jumlah_barang'];
+			$keterangan = $_POST['keterangan_barang'];
+			
+			$cart = getCartByUserID($_SESSION['login-data']->id);
+			
+			$cart_item = new ObjectCartItem();
+			$cart_item->cart_id = $cart->isi->id;
+			$cart_item->barang_id = $id;
+			$cart_item->jumlah = $jumlah;
+			$cart_item->keterangan = $keterangan;
+			
+			$message = addCartItem($cart_item);
+			
+			header('Location: index.php');
+		}
 		else
 		{
 			echo "Action not found";

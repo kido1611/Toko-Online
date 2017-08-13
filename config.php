@@ -348,7 +348,7 @@
 														echo '<img class="barang-item-whislist" src="images/like.png" >';
 													}
 												?>
-												<img class="barang-item-cart" src="images/cart.png" >
+												<a href="cart_add_page.php?id=<?php echo $data->id;?>"><img class="barang-item-cart" src="images/cart.png"></a>
 											</div>
 										<?php
 									}
@@ -363,7 +363,7 @@
 													echo '<img class="barang-item-whislist" src="images/like.png" >';
 												}
 											?>
-											<img class="barang-item-cart" src="images/cart.png" >
+											<a href="cart_add_page.php?id=<?php echo $data->id;?>"><img class="barang-item-cart" src="images/cart.png"></a>
 										</div>
 									<?php
 								}
@@ -444,6 +444,57 @@
 			$kategori->nama = "Tidak ada";
 			$message->isi = $kategori;
 		}
+		
+		return $message;
+	}
+
+	function getCartByUserID($id)
+	{
+		global $conn;
+		
+		$message = new ObjectMessage();
+		$message->sukses = 0;
+		
+		$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id";
+		$result = $conn->query($sql);
+		
+		if($result->num_rows < 0)
+		{
+			$sql2 = "INSERT INTO `webprog_cart` (`cart_id`, `user_id`, `cart_jasa_kirim`, `cart_tanggal_tambah`, `cart_transaksi`) VALUES (NULL, '$id', '0', NOW(), '0');";
+			$result2 = $conn->query($sql);
+			
+			$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id";
+			$result = $conn->query($sql);
+		}
+		
+		$rows = $result->fetch_assoc();
+		
+		$cart = new ObjectCart();
+		$cart->id = $rows['cart_id'];
+		$cart->user_id = $rows['user_id'];
+		$cart->jasa_kirim = $rows['cart_jasa_kirim'];
+		$cart->tanggal_tambah = $rows['cart_tanggal_tambah'];
+		$cart->transaksi = $rows['cart_transaksi'];
+		
+		$message->sukses = 1;
+		$message->message = "Cart ada";
+		$message->isi = $cart;
+		
+		return $message;
+	}
+
+	function addCartItem($cart_item)
+	{
+		global $conn;
+		
+		$sql = "INSERT 
+				INTO `webprog_cart_item` (`cart_item_id`, `cart_id`, `barang_id`, `cart_item_jumlah`, `cart_item_keterangan`, `cart_item_tanggal_tambah`) 
+				VALUES (NULL, '$cart_item->cart_id', '$cart_item->barang_id', '$cart_item->jumlah', '$cart_item->keterangan', NOW());";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil ditambahkan";
 		
 		return $message;
 	}

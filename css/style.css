@@ -506,17 +506,19 @@ select#barang-sort-list
 	height: 30px;
 }
 
-a.button
+.button
 {
 	background-color: #237DA3;
+	border: none;
 	box-shadow: 1px 1px 1px #4F4E4E;
 	color: #fff;
+	display: inline-block;
 	padding: 8px;
 	margin: 10px 0px;
 	text-decoration: none;
 }
 
-a.button:hover
+.button:hover
 {
 	background-color: #075A7E;
 }

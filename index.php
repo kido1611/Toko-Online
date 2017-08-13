@@ -18,10 +18,10 @@
 			</h2>
 			<hr/>
 			<select name="sort" required id="barang-sort-list" onChange="sort();">
-				<option value="0" selected>Terbaru</option>
-				<option value="1">Nama</option>
-				<option value="2">Termahal</option>
-				<option value="3">Termurah</option>
+				<option value="0" <?php if(isset($_GET['sort'])){if($_GET['sort']==1){echo "selected";}}else{echo "selected";}?>>Terbaru</option>
+				<option value="1" <?php if(isset($_GET['sort'])){if($_GET['sort']==1){echo "selected";}}?>>Nama</option>
+				<option value="2" <?php if(isset($_GET['sort'])){if($_GET['sort']==2){echo "selected";}}?>>Termahal</option>
+				<option value="3" <?php if(isset($_GET['sort'])){if($_GET['sort']==3){echo "selected";}}?>>Termurah</option>
 			</select>
 		</div>
 		<div id="content">
