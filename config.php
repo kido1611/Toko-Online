@@ -25,6 +25,7 @@
 		$sql = "select * from webprog_user where user_username='$user->username'";
 		
 		$result = $conn->query($sql);
+		$message->isi = $user;
 		if($result->num_rows>0)
 		{
 			$message->message = "User sudah ada";
@@ -40,7 +41,6 @@
 		}	
 		
 		return $message;
-			
 	}
 
 	function getUser($username, $password)
@@ -137,16 +137,23 @@
 		}
 	}
 
-	function getAllKategoriHTMLOption()
+	function getAllKategoriHTMLOption($selected = -1)
 	{
 		$message = getAllKategori();
-		
+		echo $selected;
 		if($message->sukses==1)
 		{
 			foreach($message->isi as $data)
 			{
-				echo "<li>$data->nama</li>";
-				echo "<option value='$data->id'>$data->nama</option>";
+//				echo "<li>$data->nama</li>";
+				if($selected==$data->id)
+				{
+					echo "<option value='$data->id' selected>$data->nama</option>";
+				}
+				else
+				{
+					echo "<option value='$data->id'>$data->nama</option>";
+				}
 			}
 		}
 	}
@@ -174,6 +181,76 @@
 		$message = new ObjectMessage();
 		$message->sukses = 1;
 		$message->message = "Berhasil ditambahkan";
+		
+		return $message;
+	}
+
+	function editBarang($barang)
+	{
+		global $conn;
+		
+		$sql = "UPDATE `webprog_barang` SET 
+					`barang_nama` = '$barang->nama', 
+					`barang_harga` = '$barang->harga', 
+					`barang_kategori` = '$barang->kategori', 
+					`barang_jumlah` = '$barang->jumlah', 
+					`barang_keterangan` = '$barang->keterangan' 
+				WHERE `webprog_barang`.`barang_id` = $barang->id";
+		$result = $conn->query($sql);
+		
+		if($barang->gambar != null || $barang->gambar!="")
+		{
+			$sql = "UPDATE `webprog_barang` SET 
+				`barang_gambar` = '$barang->gambar' 
+				WHERE `webprog_barang`.`barang_id` = $barang->id";
+			$result = $conn->query($sql);
+		}
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil diubah";
+		
+		return $message;
+	}
+
+	function hapusBarang($id)
+	{
+		global $conn;
+		
+		$sql = "DELETE FROM `webprog_barang` WHERE `webprog_barang`.`barang_id` = $id";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil dihapus";
+		
+		return $message;
+	}
+
+	function ubahKategori($id, $nama)
+	{
+		global $conn;
+		
+		$sql = "UPDATE `webprog_kategori` SET `kategori_nama` = '$nama' WHERE `webprog_kategori`.`kategori_id` = $id;";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil diubah";
+		
+		return $message;
+	}
+
+	function hapusKategori($id)
+	{
+		global $conn;
+		
+		$sql = "DELETE FROM `webprog_kategori` WHERE `webprog_kategori`.`kategori_id` = $id";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil dihapus";
 		
 		return $message;
 	}
@@ -258,15 +335,39 @@
 								</a>
 							</span>
 							<span class="barang-item-info-harga">IDR <?php echo $data->harga; ?></span>
-							<div class="barang-item-info-whist">
-								<?php
-									if(isset($_SESSION['login']))
+							<?php
+								if(isset($_SESSION['login']))
+								{
+									if($_SESSION['login-data']->jenis > -1)
 									{
-										echo '<img class="barang-item-whislist" src="images/like.png" >';
+										?>
+											<div class="barang-item-info-whist">
+												<?php
+													if(isset($_SESSION['login']))
+													{
+														echo '<img class="barang-item-whislist" src="images/like.png" >';
+													}
+												?>
+												<img class="barang-item-cart" src="images/cart.png" >
+											</div>
+										<?php
 									}
-								?>
-								<img class="barang-item-cart" src="images/cart.png" >
-							</div>
+								}
+								else
+								{
+									?>
+										<div class="barang-item-info-whist">
+											<?php
+												if(isset($_SESSION['login']))
+												{
+													echo '<img class="barang-item-whislist" src="images/like.png" >';
+												}
+											?>
+											<img class="barang-item-cart" src="images/cart.png" >
+										</div>
+									<?php
+								}
+							?>
 						</div>
 					</div>
 				<?php
@@ -277,5 +378,73 @@
 			echo "<h3 class='nomargin'>Barang tidak ada</h3>";
 		}
 		
+	}
+	function getBarangByID($id)
+	{
+		global $conn;
+		
+		$sql = "SELECT * FROM WEBPROG_BARANG WHERE BARANG_ID = '$id'";
+
+		
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 0;
+		
+		$num_result = $result->num_rows;
+		if($num_result>0)
+		{
+			$data = $result->fetch_assoc();
+			
+			$barang = new ObjectBarang();
+			$barang->id = $data['barang_id'];
+			$barang->nama = $data['barang_nama'];
+			$barang->harga = $data['barang_harga'];
+			$barang->kategori = $data['barang_kategori'];
+			$barang->jumlah = $data['barang_jumlah'];
+			$barang->gambar = $data['barang_gambar'];
+			$barang->tanggal_tambah = $data['barang_tanggal_tambah'];
+			$barang->keterangan = $data['barang_keterangan'];
+				
+			$message->message = "Barang ditemukan";
+			$message->sukses = 1;
+			$message->isi = $barang;
+		}
+		
+		return $message;
+	}
+	function getKategoriByID($id)
+	{
+		global $conn;
+		
+		$sql = "SELECT * FROM webprog_kategori where kategori_id = '$id'";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 0;
+		
+		$num_result = $result->num_rows;
+		if($num_result>0)
+		{
+			$rows = $result->fetch_assoc();
+
+			$kategori = new Objectkategori();
+			$kategori->id = $rows['kategori_id'];
+			$kategori->nama = $rows['kategori_nama'];
+			$kategori->tanggal_tambah = $rows['kategori_tanggal_tambah'];
+			$kategori->index = $rows['kategori_index'];
+			
+			$message->message = "Kategori ditemukan";
+			$message->sukses = 1;
+			$message->isi = $kategori;
+		}
+		else
+		{
+			$kategori = new Objectkategori();
+			$kategori->nama = "Tidak ada";
+			$message->isi = $kategori;
+		}
+		
+		return $message;
 	}
 ?>

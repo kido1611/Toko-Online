@@ -18,22 +18,27 @@
 			$user->alamat = $_POST['alamat'];
 			
 			$message = registerUser($user);
-			
+			$_SESSION['message'] = $message;
+			header('Location: register_page.php');
 		}
 		else if($action=="login")
 		{
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$message = getUser($username, $password);
-				
+			
+			$_SESSION['message'] = $message;
+			
 			if($message->sukses==0)
 			{
-				echo $message->message;
-				header('Location: login_page.php', true, 303);
+				$user = new ObjectUser();
+				$user->username = $username;
+				$user->password = $password;
+				$message->isi = $user;
+				header('Location: login_page.php');
 			}
 			else
 			{
-				echo $message->message." ".$message->isi->nama;	
 				$_SESSION['login'] = $message->isi->id;
 				$_SESSION['login-data'] = $message->isi;
 				header('Location: index.php');
@@ -44,10 +49,23 @@
 			$nama = $_POST['nama'];
 			$message = addKategori($nama);
 			
-			echo $message->message;
+			header('Location: admin_page.php');
+		}
+		else if($action=="kategori-ubah")
+		{
+			$nama = $_POST['nama'];
+			$id = $_POST['id'];
+			
+			echo $nama." ".$id;
+			$message = ubahKategori($id, $nama);
+			
+			header('Location: admin_page.php');
 		}
 		else if($action=="barang-tambah")
 		{	
+			$message = new ObjectMessage();
+			$message->sukses = 0;
+
 			$barang = new ObjectBarang();
 			$barang->nama = $_POST['nama_barang'];
 			$barang->harga = $_POST['harga_barang'];
@@ -63,18 +81,61 @@
 			$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 			
 			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-				echo "Hanya file jpeg, jpg, dan png yang diperbolehkan";
+				$message->message =  "Hanya file jpeg, jpg, dan png yang diperbolehkan";
 			}
 			else
 			{
 				if (move_uploaded_file($_FILES["gambar_barang"]["tmp_name"], $target_file)) {
 					$message = addBarang($barang);
-					echo $message->message;
-					//header('Location: index.php');
 				} else {
-					echo "Eror saat mengupload gambar";
+					$message->message =  "Hanya file jpeg, jpg, dan png yang diperbolehkan";
 				}
 			}
+			
+			header('Location: admin_page.php?barang');
+		}
+		else if($action=="barang-ubah")
+		{	
+			$message = new ObjectMessage();
+			$message->sukses = 0;
+			
+			$barang = new ObjectBarang();
+			$barang->id = $_POST['id_barang'];
+			$barang->nama = $_POST['nama_barang'];
+			$barang->harga = $_POST['harga_barang'];
+			$barang->kategori = $_POST['kategori_barang'];
+			$barang->jumlah = $_POST['jumlah_barang'];
+			$barang->keterangan = $_POST['keterangan_barang'];
+			
+			if($_FILES['gambar_barang']["name"]!="")
+			{
+				$target_dir = "barang/";
+				$target_file = $target_dir . $barang->nama."_".basename($_FILES["gambar_barang"]["name"]);
+
+				$barang->gambar = $target_file;
+
+				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+				if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+					$message->message =  "Hanya file jpeg, jpg, dan png yang diperbolehkan";
+				}
+				else
+				{
+					if (move_uploaded_file($_FILES["gambar_barang"]["tmp_name"], $target_file)) {
+						//header('Location: index.php');
+					} else {
+						$message->message =  "Hanya file jpeg, jpg, dan png yang diperbolehkan";
+					}
+				}
+			}
+			
+			$message = editBarang($barang);
+			
+			header('Location: admin_page.php?barang');
+		}
+		else
+		{
+			echo "Action not found";
 		}
 	}
 	else

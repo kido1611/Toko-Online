@@ -14,46 +14,104 @@
 	{
 		header('Location: index.php');
 	}
+
+	if(isset($_GET['delete-category']))
+	{
+		$id = $_GET['delete-category'];
+		hapusKategori($id);
+	}
+	else if(isset($_GET['delete-barang']))
+	{
+		$id = $_GET['delete-barang'];
+		hapusBarang($id);
+	}
 ?>
 <section>
-	<div class="admin">
-		<form style="margin: auto; width: 1000px; text-align:center; " action="action.php" method="post" enctype="multipart/form-data">
-			<p>
-				Anda sedangkan menambahkan barang
-			</p>
-			<ul>
-				<li>Nama barang : <input class="admin_form" type="text" id="nama_barang" name="nama_barang" required/></li>
-				<li>Harga barang : <input class="admin_form" type="number" id="harga_barang" name="harga_barang" min="0" required/></li>
-				<li>Jumlah barang : <input class="admin_form" type="number" id="jumlah_barang" name="jumlah_barang" required/></li>
-				<li>Kategori barang : 
-					<select style="float: right; margin-right: 50px;" name="kategori_barang" required>
-						<option value="NULL" selected disabled>---Pilih kategori</option>
-						<?php
-							getAllKategoriHTMLOption();
-						?>
-					</select>
-				</li>
-				<li>
-					Deskripsi barang : <br/>
-					<textarea name="keterangan_barang" id="keterangan_barang" style="width: calc(100% - 32px - 20px); height: 70px;"></textarea>
-				</li>
-				<li>Gambar barang : <input style="margin-left: 4%;" type="file" value="Upload gambar" name="gambar_barang" required></li>
-				<li>
-					<input type="hidden" name="action" value="barang-tambah" >
-					<input style="margin-left: 30%;" class="btn" type="submit" value="Tambah">
-				</li>		
-			</ul>
-		</form>
-		<form method="post" action="action.php" style="max-width: 70%; margin-left: 20%; margin-right: 20%; text-align:center; ">
-			<h1>Kategori</h1>
-			<div>
-				Nama
-				<input type="text" name="nama" id="name" required>
-				<input type="hidden" name="action" value="kategori-tambah" >
-			</div>
-			<input style="margin: 10px;" type="submit" class="btn" value="Tambah">
-		</form>
+	<div class="admin-page">
+		<a href="?kategori" class="button">Kategori</a> <a href="?barang" class="button">Barang</a>
 	</div>
+	<?php
+		if(isset($_GET['kategori']))
+		{
+			?>
+				<div id="admin-kategori" class="admin-page">
+					<h3 class="nomargin">Kategori</h3>
+					<br/>
+					<a href="admin_page_category_add.php" class="button">Tambah kategori</a>
+					<br/>
+					<br/>
+					<table>
+						<tr>
+							<th>No</th>
+							<th>Nama</th>
+							<th>Tanggal ditambah</th>
+							<th>Aksi</th>
+						</tr>
+						<?php
+							$hasil = getAllKategori();
+							$jumlah = 1;
+							foreach($hasil->isi as $data)
+							{
+								echo 	"<tr>
+											<td>$jumlah</td>
+											<td>$data->nama</td>
+											<td>$data->tanggal_tambah</td>
+											<td><a href='admin_page_category_add.php?id=$data->id'>Ubah</a> <a href='?delete-category=$data->id'>Hapus</a></td>
+										</tr>";
+								$jumlah = $jumlah+1;
+							}
+						?>
+					</table>
+				</div>
+			<?php
+		}
+		else
+		{
+			?>
+				<div id="admin-barang" class="admin-page">
+					<h3 class="nomargin">Barang</h3>
+					<br/>
+					<a href="admin_page_product_add.php" class="button">Tambah barang</a>
+					<br/>
+					<br/>
+					<table>
+						<tr>
+							<th>No</th>
+							<th>Nama</th>
+							<th>Harga</th>
+							<th>Kategori</th>
+							<th>Jumlah</th>
+							<th>Tanggal ditambah</th>
+							<th>Aksi</th>
+						</tr>
+						<?php
+							$sql = "Select * from webprog_barang";
+							$hasil = getAllBarang($sql);
+							$jumlah = 1;
+							foreach($hasil->isi as $data)
+							{
+								$kategori = getKategoriByID($data->kategori)->isi;
+								echo 	"<tr>
+											<td>$jumlah</td>
+											<td>
+												<img class='image-cover image-admin-barang' src='$data->gambar'/>
+												<br/>
+												<a href='product_page.php?id=$data->id'>$data->nama</a>
+											</td>
+											<td>IDR. $data->harga</td>
+											<td>$kategori->nama</td>
+											<td>$data->jumlah</td>
+											<td>$data->tanggal_tambah</td>
+											<td><a href='admin_page_product_add.php?id=$data->id'>Ubah</a> <a href='?delete-barang=$data->id'>Hapus</a></td>
+										</tr>";
+								$jumlah = $jumlah+1;
+							}
+						?>
+					</table>
+				</div>
+			<?php
+		}
+	?>
 </section>
 
 <?php
