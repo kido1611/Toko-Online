@@ -32,6 +32,7 @@
 						if($_SESSION['login-data']->jenis > -1)
 						{
 							echo '<li style="float: right; "><a style="padding: 7px 10px 5px 10px; " href="cart_page.php"><img src="./images/shopping-cart.png" /></a></li>';
+							echo '<li style="float: right; "><a href="#">Selamat datang '.$_SESSION['login-data']->nama.'</a></li>';
 						}
 						else
 						{

@@ -43,7 +43,7 @@
 				<div>
 					<input type="hidden" name="action" value="cart-add"/>
 					<input type="hidden" name="id_barang" value="<?php echo $barang->isi->id; ?>" />
-					<a class="button button_size" href="index.php">Batal</a>
+					<a class="button" href="index.php">Batal</a>
 					<span style="margin-right: 100px"></span>
 					<a class="button " href="#" onClick="document.getElementById('form-add-cart').submit();">Beli</a>
 				</div>
