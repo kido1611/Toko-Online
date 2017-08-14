@@ -78,6 +78,41 @@
 		return $message;
 	}
 
+	function getUserByID($id)
+	{
+		global $conn;
+		$message = new ObjectMessage();
+		
+		$sql = "select * from webprog_user where user_id=$id;";
+		$result = $conn->query($sql);
+		
+		if($result->num_rows<1)
+		{
+			$message->message = "User tidak ada";
+			$message->sukses = 0;
+		}
+		else
+		{
+			$data = $result->fetch_assoc();
+		
+			$user = new ObjectUser();
+			$user->id = $data['user_id'];
+			$user->jenis = $data['user_jenis'];
+			$user->nama = $data['user_nama'];
+			$user->email = $data['user_email'];
+			$user->username = $data['user_username'];
+			$user->password = $data['user_password'];
+			$user->alamat = $data['user_alamat'];
+			$user->ho_hp = $data['user_nohp'];
+
+			$message->message = "User ditemukan";
+			$message->sukses = 1;
+			$message->isi = $user;
+		}
+		
+		return $message;
+	}
+
 	function addKategori($nama)
 	{
 		global $conn;
@@ -496,6 +531,45 @@
 		return $message;
 	}
 
+	function getCartByTransaction($transaksi=0)
+	{
+		global $conn;
+		
+		$message = new ObjectMessage();
+		$message->sukses = 0;
+		
+		$sql = "SELECT * FROM `webprog_cart` WHERE cart_transaksi = $transaksi";
+		$result = $conn->query($sql);
+
+		if($result->num_rows > 0)
+		{
+			
+			$message->sukses = 1;
+			$data = array();
+			while($rows = $result->fetch_assoc())
+			{
+				$cart = new ObjectCart();
+				$cart->id = $rows['cart_id'];
+				$cart->user_id = $rows['user_id'];
+				$cart->jasa_kirim = $rows['cart_jasa_kirim'];
+				$cart->tanggal_tambah = $rows['cart_tanggal_tambah'];
+				$cart->transaksi = $rows['cart_transaksi'];
+				
+				$data[] = $cart;
+			}
+			
+			$message->sukses = 1;
+			$message->message = "Cart ada";
+			$message->isi = $data;
+		}
+		else
+		{
+			$message->message = "Cart tidak ada";
+		}
+		
+		return $message;
+	}
+
 	function addCartItem($cart_item)
 	{
 		global $conn;
@@ -577,6 +651,29 @@
 		$message->sukses = 1;
 		
 		$cart = getCartByUserID($id, $transaksi);	
+		
+		if(count($cart->isi)>0)
+		{
+			foreach($cart->isi as $data)
+			{
+				$cart_item = getAllCartItemByCart($data->id);
+				$data->item = $cart_item->isi;
+			}
+		}
+		
+		$message->isi = $cart;
+		
+		return $message;
+	}
+
+	function getAllCartItemByTransaksi($transaksi=0)
+	{
+		global $conn;
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		
+		$cart = getCartByTransaction($transaksi);	
 		
 		if(count($cart->isi)>0)
 		{
