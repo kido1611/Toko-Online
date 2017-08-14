@@ -24,6 +24,12 @@
 		$id = $_GET['kirim'];
 		updateTransaksiCart($id, 2);
 	}
+
+	if(isset($_GET['hapus-cart']))
+	{
+		$id = $_GET['hapus-cart'];
+		hapusCart($id);
+	}
 ?>
 <section>
 	<div class="admin-page">
@@ -60,6 +66,7 @@
 											<span><?php echo $user->isi->alamat;?></span>
 											<br/>
 											<a class="button" href="?kirim=<?php echo $cart_data->id;?>">Kirim</a>
+											<a class="button" href="?hapus-cart=<?php echo $cart_data->id;?>">Hapus</a>
 										</div>
 										<table style="width: 100%;">
 											<tr>

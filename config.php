@@ -703,12 +703,53 @@
 		return $message;
 	}
 
+	function hapusCart($id)
+	{
+		global $conn;
+		
+		$sql = "DELETE FROM `webprog_cart` WHERE `webprog_cart`.`cart_id` = $id";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil dihapus";
+		
+		return $message;
+	}
+
+
 	function updateTransaksiCart($cart_id, $transaksi)
 	{
 		global $conn;
 		
-		$sql = "UPDATE `webprog_cart` SET `cart_transaksi` = '$transaksi' WHERE `webprog_cart`.`cart_id` = $cart_id";
-		$result = $conn->query($sql);
+		$sukses = 1;
+		
+		if($transaksi==2)
+		{
+			$cart_item = getAllCartItemByCart($cart_id);
+			if(count($cart_item->isi) > 0)
+			{
+				foreach($cart_item->isi as $item)
+				{
+					$barang = getBarangByID($item->barang_id)->isi;
+					$barang->jumlah = $barang->jumlah - $item->jumlah;
+					if($barang->jumlah < 0)
+					{
+						$sukses = 0;
+					}
+					else
+					{
+						editBarang($barang);
+					}
+				}
+			}
+		}
+		
+		if($sukses==1)
+		{
+			$sql = "UPDATE `webprog_cart` SET `cart_transaksi` = '$transaksi' WHERE `webprog_cart`.`cart_id` = $cart_id";
+			$result = $conn->query($sql);
+		}
 		
 		$message = new ObjectMessage();
 		$message->sukses = 1;
