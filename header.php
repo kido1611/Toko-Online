@@ -36,6 +36,7 @@
 						else
 						{
 							echo '<li style="float: right;"><a href="admin_page.php">Admin</a></li>';
+							echo '<li style="float: right; "><a style="padding: 7px 10px 5px 10px; " href="admin_cart_page.php"><img src="./images/shopping-cart.png" /></a></li>';
 						}
 					}
 					else

@@ -515,15 +515,11 @@ select#barang-sort-list
 	box-shadow: 1px 1px 1px #4F4E4E;
 	color: #fff;
 	display: inline-block;
-	height: 20px;
-	width: 50px;
-	padding: 8px;
 	margin: 10px 0px;
+	padding: 8px;
+	text-align: center;
 	text-decoration: none;
 }
-
-
-
 
 .button:hover
 {

@@ -53,7 +53,7 @@
 							<li>Password:<input class="regis_form" type="password" id="password" name="password" required/></li>
 							<li>Nama Lengkap:<input class="regis_form" type="text" id="namalengkap" name="namalengkap" required></span></li>
 							<li>Email:<input class="regis_form" type="Email" id="email" name="email" required></span></li>
-							<li>Nomor Telepon:<input class="regis_form" type="text" id="telepon" name="telepon" required></span></li>
+							<li>Nomor Telepon:<input class="regis_form" type="number" id="telepon" name="telepon" required></span></li>
 							<li>Alamat:<input class="regis_form" type="text" id="alamat" name="alamat" required></span></li>
 							<li><input type="checkbox" id="newsletter" name="newsletter" value="newsletter">Newsletter
 							<span style="padding-left: 6em"></span><input type="checkbox" id="EULA_term" name="EULA_term" value="EULA_term" required><span style="text-decoration: underline; cursor:pointer;" onclick="sendmessage()"> EULA terms</span></li>

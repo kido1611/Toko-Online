@@ -36,9 +36,7 @@
 			?>
 				<div id="admin-kategori" class="admin-page">
 					<h3 class="nomargin">Kategori</h3>
-					<br/>
 					<a href="admin_page_category_add.php" class="button">Tambah kategori</a>
-					<br/>
 					<br/>
 					<table>
 						<tr>
@@ -70,9 +68,7 @@
 			?>
 				<div id="admin-barang" class="admin-page">
 					<h3 class="nomargin">Barang</h3>
-					<br/>
 					<a href="admin_page_product_add.php" class="button">Tambah barang</a>
-					<br/>
 					<br/>
 					<table>
 						<tr>

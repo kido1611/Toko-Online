@@ -142,7 +142,7 @@
 			$cart = getCartByUserID($_SESSION['login-data']->id);
 			
 			$cart_item = new ObjectCartItem();
-			$cart_item->cart_id = $cart->isi->id;
+			$cart_item->cart_id = $cart->isi[0]->id;
 			$cart_item->barang_id = $id;
 			$cart_item->jumlah = $jumlah;
 			$cart_item->keterangan = $keterangan;

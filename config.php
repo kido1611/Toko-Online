@@ -448,37 +448,50 @@
 		return $message;
 	}
 
-	function getCartByUserID($id)
+	function getCartByUserID($id, $transaksi=0)
 	{
 		global $conn;
 		
 		$message = new ObjectMessage();
 		$message->sukses = 0;
 		
-		$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = 0";
+		$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = $transaksi";
 		$result = $conn->query($sql);
 		
-		if($result->num_rows < 0)
+		if($result->num_rows < 1 && $transaksi==0)
 		{
-			$sql2 = "INSERT INTO `webprog_cart` (`cart_id`, `user_id`, `cart_jasa_kirim`, `cart_tanggal_tambah`, `cart_transaksi`) VALUES (NULL, '$id', '0', NOW(), '0');";
-			$result2 = $conn->query($sql);
+			$sql = "INSERT INTO `webprog_cart` (`cart_id`, `user_id`, `cart_jasa_kirim`, `cart_tanggal_tambah`, `cart_transaksi`) VALUES (NULL, '$id', '0', NOW(), '0');";
+			$result = $conn->query($sql);
 			
-			$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = 0";
+			$sql = "SELECT * FROM `webprog_cart` WHERE user_id=$id and cart_transaksi = $transaksi";
 			$result = $conn->query($sql);
 		}
 		
-		$rows = $result->fetch_assoc();
-		
-		$cart = new ObjectCart();
-		$cart->id = $rows['cart_id'];
-		$cart->user_id = $rows['user_id'];
-		$cart->jasa_kirim = $rows['cart_jasa_kirim'];
-		$cart->tanggal_tambah = $rows['cart_tanggal_tambah'];
-		$cart->transaksi = $rows['cart_transaksi'];
-		
-		$message->sukses = 1;
-		$message->message = "Cart ada";
-		$message->isi = $cart;
+		if($result->num_rows > 0)
+		{
+			
+			$message->sukses = 1;
+			$data = array();
+			while($rows = $result->fetch_assoc())
+			{
+				$cart = new ObjectCart();
+				$cart->id = $rows['cart_id'];
+				$cart->user_id = $rows['user_id'];
+				$cart->jasa_kirim = $rows['cart_jasa_kirim'];
+				$cart->tanggal_tambah = $rows['cart_tanggal_tambah'];
+				$cart->transaksi = $rows['cart_transaksi'];
+				
+				$data[] = $cart;
+			}
+			
+			$message->sukses = 1;
+			$message->message = "Cart ada";
+			$message->isi = $data;
+		}
+		else
+		{
+			$message->message = "Cart tidak ada";
+		}
 		
 		return $message;
 	}
@@ -533,17 +546,46 @@
 		return $message;
 	}
 
-	function getAllCartItemByUserID($id)
+	function getAllCartItemByUserID($id, $transaksi=0)
 	{
 		global $conn;
 		
 		$message = new ObjectMessage();
 		$message->sukses = 1;
 		
-		$cart = getCartByUserID($id)->isi;
+		$cart = getCartByUserID($id, $transaksi);	
 		
-		$cart_item = getAllCartItemByCart($cart->id);
-		$cart->item = $cart_item->isi;
+		if(count($cart->isi)>0)
+		{
+			foreach($cart->isi as $data)
+			{
+				$cart_item = getAllCartItemByCart($data->id);
+				$data->item = $cart_item->isi;
+			}
+		}
+		
+		$message->isi = $cart;
+		
+		return $message;
+	}
+
+	function getAllCartItem($transaksi=0)
+	{
+		global $conn;
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		
+		$cart = getCartByUserID($id, $transaksi);	
+		
+		if(count($cart->isi)>0)
+		{
+			foreach($cart->isi as $data)
+			{
+				$cart_item = getAllCartItemByCart($data->id);
+				$data->item = $cart_item->isi;
+			}
+		}
 		
 		$message->isi = $cart;
 		
@@ -560,6 +602,20 @@
 		$message = new ObjectMessage();
 		$message->sukses = 1;
 		$message->message = "Berhasil dihapus";
+		
+		return $message;
+	}
+
+	function updateTransaksiCart($cart_id, $transaksi)
+	{
+		global $conn;
+		
+		$sql = "UPDATE `webprog_cart` SET `cart_transaksi` = '$transaksi' WHERE `webprog_cart`.`cart_id` = $cart_id";
+		$result = $conn->query($sql);
+		
+		$message = new ObjectMessage();
+		$message->sukses = 1;
+		$message->message = "Berhasil diubah";
 		
 		return $message;
 	}
