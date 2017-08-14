@@ -142,23 +142,24 @@ form ul
 }
 
 .regis_form{
-	width: 250px;
+	width: 200px;
 	float: right;
-	margin-right: 200px;
+	margin-right: 25%;
 	border-radius: 10px;
 }
 
 
 .login_form{
-	width: 250px;
+	width: 200px;
 	float: right;
-	margin-right: 300px;
+	margin-right: 25%;
 	border-radius: 10px;
 }
 
 
 .login form {
 	border: none;
+	margin: auto;
 }
 
 input {
