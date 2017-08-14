@@ -127,19 +127,19 @@
 									?>
 										<table style="width: 100%;">
 											<tr>
-												<th>
+												<th style="width: 50px">
 													No.
 												</th>
-												<th>
+												<th style="width: 400px">
 													Barang
 												</th>
-												<th>
+												<th style="width: 100px">
 													Harga
 												</th>
-												<th>
+												<th style="width: 50px">
 													Jumlah Barang
 												</th>
-												<th>
+												<th style="width: 100px">
 													Subtotal
 												</th>
 											</tr>

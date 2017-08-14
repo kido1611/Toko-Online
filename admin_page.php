@@ -52,9 +52,9 @@
 							{
 								echo 	"<tr>
 											<td>$jumlah</td>
-											<td>$data->nama</td>
+											<td class='hylink_nama' >$data->nama</td>
 											<td>$data->tanggal_tambah</td>
-											<td><a href='admin_page_category_add.php?id=$data->id'>Ubah</a> <a href='?delete-category=$data->id'>Hapus</a></td>
+											<td><a class='hylink' href='admin_page_category_add.php?id=$data->id'>Ubah</a> <a class='hylink' href='?delete-category=$data->id'>Hapus</a></td>
 										</tr>";
 								$jumlah = $jumlah+1;
 							}
@@ -92,13 +92,13 @@
 											<td>
 												<img class='image-cover image-admin-barang' src='$data->gambar'/>
 												<br/>
-												<a href='product_page.php?id=$data->id'>$data->nama</a>
+												<a class='hylink_nama' href='product_page.php?id=$data->id'>$data->nama</a>
 											</td>
 											<td>IDR. $data->harga</td>
 											<td>$kategori->nama</td>
 											<td>$data->jumlah</td>
 											<td>$data->tanggal_tambah</td>
-											<td><a href='admin_page_product_add.php?id=$data->id'>Ubah</a> <a href='?delete-barang=$data->id'>Hapus</a></td>
+											<td><a class='hylink' href='admin_page_product_add.php?id=$data->id'>Ubah</a> <a class='hylink' href='?delete-barang=$data->id'>Hapus</a></td>
 										</tr>";
 								$jumlah = $jumlah+1;
 							}

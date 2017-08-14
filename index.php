@@ -8,7 +8,7 @@
 		<br>
 	</div>
 	<br>
-	<div style="background-color: white; width: 80%; margin: auto;text-align: center;">
+	<div style="background-color: #E0E5FF; width: 80%; margin: auto;text-align: center; padding: 8px;">
 		"Toko Online adalah versi online dari Toko Online dari toko yang berada di Jalan Diponegori No. 128CE, Salatiga"
 		<br>
 		Happy Shopping ^^

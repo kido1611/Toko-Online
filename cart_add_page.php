@@ -18,7 +18,7 @@
 	$kategori = getKategoriByID($barang->isi->kategori);
 ?>
 <section>
-	<div class="admin-page cart-add-div">
+	<div class="admin-page">
 		<form action="action.php" method="post" enctype="multipart/form-data" id="form-add-cart">
 				<p>
 					Anda akan membeli :
@@ -43,9 +43,9 @@
 				<div>
 					<input type="hidden" name="action" value="cart-add"/>
 					<input type="hidden" name="id_barang" value="<?php echo $barang->isi->id; ?>" />
-					<a class="button button_batal" href="index.php">Batal</a>
+					<a class="button button_size" href="index.php">Batal</a>
 					<span style="margin-right: 100px"></span>
-					<a class="button" href="#" onClick="document.getElementById('form-add-cart').submit();">Beli</a>
+					<a class="button " href="#" onClick="document.getElementById('form-add-cart').submit();">Beli</a>
 				</div>
 		</form>
 		
