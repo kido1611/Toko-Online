@@ -155,12 +155,12 @@ CREATE TABLE `webprog_user` (
 
 INSERT INTO `webprog_user` (`user_id`, `user_jenis`, `user_nama`, `user_email`, `user_username`, `user_password`, `user_alamat`, `user_nohp`, `user_tanggal_daftar`) VALUES
 (1, -1, 'admin', 'admin@localhost', 'admin', 'YWRtaW4=', 'admin', '0123456789', '2017-08-08 04:26:26'),
-(9, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy', 'YWhtYWRjaTNAZ21haWwuY29t', 'Semarang', '085727758392', '2017-08-03 16:10:23'),
-(10, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy2', 'YWhtYWQ=', 'Semarang', '+6285727758392', '2017-08-08 04:11:21'),
+(9, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy', 'YWhtYWRjaTNAZ21haWwuY29t', 'Semarang', '081234567890', '2017-08-03 16:10:23'),
+(10, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy2', 'YWhtYWQ=', 'Semarang', '+6281234567890', '2017-08-08 04:11:21'),
 (11, 1, 'coba', 'coba@localhost', 'coba', 'Y29iYQ==', 'coba', '0812371237', '2017-08-11 07:30:12'),
-(12, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy3', 'YWhtYWQ=', 'semarang', '085727758392', '2017-08-13 05:56:27'),
-(13, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy4', 'YWhtYWQ=', 'semarang', '085727758392', '2017-08-13 05:57:13'),
-(14, 1, 'ahmad', 'ahmad@localhost', 'ahmad', 'YWhtYWQ=', 'ahmad', '085727758392', '2017-08-14 06:14:54');
+(12, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy3', 'YWhtYWQ=', 'semarang', '081234567890', '2017-08-13 05:56:27'),
+(13, 1, 'Muhammad Abdusy Syukur', 'ahmadci3@gmail.com', 'abdusy4', 'YWhtYWQ=', 'semarang', '081234567890', '2017-08-13 05:57:13'),
+(14, 1, 'ahmad', 'ahmad@localhost', 'ahmad', 'YWhtYWQ=', 'ahmad', '081234567890', '2017-08-14 06:14:54');
 
 --
 -- Indexes for dumped tables
